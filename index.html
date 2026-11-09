@@ -3,440 +3,276 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#062d29">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Xmas Countdown">
-<title>Countdown Until Xmas 🎄</title>
+<meta name="description" content="A magical, free Christmas countdown with snowfall and festive messages.">
+<title>Countdown Until Xmas</title>
 
 <style>
-:root {
-  --gold: #ffe0a0;
-  --red: #b71d30;
-  --green: #062d29;
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#062d29;
+  color:white;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  overscroll-behavior: none;
-  background: var(--green);
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-button, a {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-.app {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
-  isolation: isolate;
+.app{
+  position:relative;
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;
+  isolation:isolate;
   background:
-    radial-gradient(
-      ellipse at 50% 35%,
-      #185c4e 0%,
-      #0b3b34 48%,
-      #041d21 100%
-    );
+    radial-gradient(ellipse at center,
+    #175447,#062d29 75%);
 }
 
-/* CHRISTMAS BACKGROUND */
-
-.background {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background-image: url("christmas-background.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.background{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:
+    url("christmas-background.jpg")
+    center center/cover no-repeat;
 }
 
-.background-shade {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
+.shade{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(
     180deg,
-    rgba(2,25,23,.12),
-    rgba(2,32,28,.24) 45%,
+    rgba(2,25,23,.2),
+    rgba(2,28,25,.28) 55%,
     rgba(2,25,23,.12)
   );
 }
 
-/* SINGLE SCREEN LAYOUT */
-
-.screen {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 500px;
-  height: 100%;
-  margin: auto;
+.screen{
+  width:100%;
+  max-width:500px;
+  height:100%;
+  margin:auto;
   padding:
-    max(8px, env(safe-area-inset-top))
-    14px
-    max(8px, env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-evenly;
-  text-align: center;
-  gap: 0;
-  overflow: hidden;
+    max(12px,env(safe-area-inset-top))
+    15px
+    max(12px,env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:space-evenly;
+  text-align:center;
+  position:relative;
+  z-index:2;
 }
 
-/* HEADER */
-
-.header {
-  flex: 0 1 auto;
-  min-height: 0;
+.eyebrow{
+  font-size:clamp(8px,1.1dvh,11px);
+  letter-spacing:2px;
+  color:#ffe0a0;
+  font-weight:bold;
 }
 
-.eyebrow {
-  font-size: clamp(8px, 1.15dvh, 11px);
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--gold);
-  text-shadow: 0 2px 8px #0009;
+.tree{
+  font-size:clamp(35px,7dvh,65px);
+  margin:5px 0;
+  filter:drop-shadow(0 0 10px #ffd56a);
 }
 
-.tree {
-  font-size: clamp(30px, 7dvh, 69px);
-  line-height: 1.05;
-  margin: clamp(3px, .8dvh, 9px) 0;
-  filter: drop-shadow(0 0 12px #ffdb78);
+h1{
+  margin:0;
+  font-family:Georgia,serif;
+  font-size:clamp(29px,5.3dvh,49px);
+  line-height:1.05;
+  text-shadow:0 3px 12px #000b;
 }
 
-h1 {
-  margin: 0;
-  font-family: Georgia, serif;
-  font-size: clamp(27px, 5.3dvh, 49px);
-  line-height: 1.04;
-  text-shadow: 0 3px 10px #000b;
+h1 span{
+  color:#ffe0a0;
+  font-style:italic;
+  font-size:1.1em;
 }
 
-h1 span {
-  color: var(--gold);
-  font-style: italic;
-  font-size: 1.1em;
-  text-shadow: 0 0 17px #ffd76a77;
+.subtitle{
+  margin:7px 0 0;
+  font-size:clamp(11px,1.7dvh,15px);
+  color:#e5eee9;
 }
 
-.description {
-  margin: clamp(3px, .8dvh, 9px) 0 0;
-  font-size: clamp(11px, 1.7dvh, 15px);
-  color: #e6eee9;
+.countdown{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:7px;
 }
 
-/* COUNTDOWN */
-
-.countdown {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0,1fr));
-  gap: 7px;
-  width: 100%;
-  flex: 0 0 auto;
+.time-box{
+  padding:clamp(10px,1.7dvh,17px) 2px;
+  border:1px solid #e5f2e9a0;
+  border-radius:15px;
+  background:rgba(15,65,55,.72);
+  backdrop-filter:blur(8px);
+  box-shadow:0 4px 12px #0003;
 }
 
-.time-box {
-  min-width: 0;
-  padding: clamp(8px, 1.55dvh, 16px) 2px;
-  border-radius: 14px;
-  border: 1px solid #e1f2e9a8;
-  background: rgba(15,64,55,.72);
-  box-shadow:
-    inset 0 1px 2px #ffffff30,
-    0 4px 12px #0003;
-  backdrop-filter: blur(6px);
+.number{
+  font-size:clamp(24px,4.7dvh,43px);
+  font-weight:800;
+  font-variant-numeric:tabular-nums;
 }
 
-.number {
-  font-size: clamp(22px, 4.6dvh, 43px);
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -1px;
+.unit{
+  margin-top:4px;
+  font-size:clamp(8px,1.1dvh,10px);
+  letter-spacing:.6px;
 }
 
-.unit {
-  margin-top: 4px;
-  font-size: clamp(8px, 1.15dvh, 10px);
-  letter-spacing: .6px;
+.progress-info{
+  display:flex;
+  justify-content:space-between;
+  font-size:clamp(10px,1.4dvh,13px);
+  margin-bottom:7px;
 }
 
-/* PROGRESS */
-
-.progress-section {
-  width: 100%;
-  flex: 0 0 auto;
+.progress-track{
+  height:8px;
+  border-radius:20px;
+  background:#ffffff38;
+  overflow:hidden;
 }
 
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-  gap: 5px;
-  font-size: clamp(10px, 1.5dvh, 13px);
-  text-shadow: 0 2px 5px #0008;
+.progress-fill{
+  height:100%;
+  width:0%;
+  border-radius:20px;
+  background:linear-gradient(
+    90deg,#d6a146,#ffe4a0);
+  transition:width .5s;
 }
 
-.progress-track {
-  width: 100%;
-  height: clamp(6px, 1dvh, 9px);
-  border-radius: 20px;
-  background: #ffffff38;
-  border: 1px solid #ffffff66;
-  overflow: hidden;
+.magic-card{
+  padding:clamp(10px,1.6dvh,17px) 8px;
+  border-radius:16px;
+  border:1px solid #e5f2e988;
+  background:rgba(9,54,47,.77);
+  backdrop-filter:blur(8px);
 }
 
-.progress-fill {
-  width: 0%;
-  height: 100%;
-  border-radius: 20px;
-  background: linear-gradient(
-    90deg,
-    #d69d35,
-    #ffe8a6
-  );
-  box-shadow: 0 0 10px #ffd56d;
-  transition: width .6s;
+.magic-title{
+  color:#ffe0a0;
+  font-family:Georgia,serif;
+  font-size:clamp(15px,2.1dvh,20px);
+  font-weight:bold;
 }
 
-/* CHRISTMAS MESSAGE */
-
-.magic-card {
-  flex: 0 0 auto;
-  width: 100%;
-  padding: clamp(9px, 1.6dvh, 17px) 8px;
-  border-radius: 16px;
-  border: 1px solid #e3f0e5a8;
-  background: rgba(8,54,47,.82);
-  backdrop-filter: blur(8px);
+.magic-text{
+  margin-top:7px;
+  font-size:clamp(11px,1.6dvh,14px);
+  color:#edf4ed;
+  min-height:18px;
 }
 
-.magic-title {
-  font-family: Georgia, serif;
-  color: var(--gold);
-  font-weight: bold;
-  font-size: clamp(14px, 2.1dvh, 20px);
+.actions{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
-.magic-message {
-  margin-top: 6px;
-  color: #edf4ed;
-  font-size: clamp(11px, 1.6dvh, 14px);
-  line-height: 1.3;
+.action-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:38px;
+  padding:9px 14px;
+  border-radius:30px;
+  border:1px solid rgba(255,225,165,.42);
+  background:rgba(7,48,41,.64);
+  color:#f6e8cb;
+  font-size:12px;
+  font-weight:500;
+  text-decoration:none;
+  backdrop-filter:blur(8px);
+  box-shadow:0 3px 9px #0002;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
 }
 
-/* SHARE BUTTON */
-
-.share-button {
-  flex: 0 0 auto;
-  width: 100%;
-  padding: clamp(10px, 1.6dvh, 16px);
-  border-radius: 14px;
-  border: 1px solid #ff9d9d;
-  background: linear-gradient(
-    180deg,
-    #d6444b,
-    #a51a2a
-  );
-  color: white;
-  font-size: clamp(13px, 1.9dvh, 16px);
-  font-weight: bold;
-  box-shadow: 0 5px 14px #0005;
-  cursor: pointer;
+.action-button:active{
+  background:rgba(30,83,70,.9);
 }
 
-/* DONATION CARD */
-
-.donation-card {
-  flex: 0 0 auto;
-  width: 100%;
-  padding: clamp(9px, 1.5dvh, 17px) 12px;
-  border-radius: 20px;
-  border: 1px solid #f5d47d;
-  background: linear-gradient(
-    135deg,
-    rgba(118,85,30,.88),
-    rgba(7,49,41,.95) 55%,
-    rgba(98,73,28,.9)
-  );
-  box-shadow:
-    0 0 20px #ffd16b35,
-    inset 0 0 15px #ffdf8920;
-  backdrop-filter: blur(8px);
+.action-icon{
+  font-size:15px;
+  color:#ffe0a0;
 }
 
-.donation-icon {
-  font-size: clamp(23px, 3.7dvh, 38px);
-  line-height: 1.1;
-  margin-bottom: 4px;
+.footer{
+  color:#ffe0a0;
+  font-size:10px;
+  letter-spacing:3px;
+  font-weight:bold;
+  text-shadow:0 2px 7px #0008;
 }
 
-.donation-title {
-  color: var(--gold);
-  font-family: Georgia, serif;
-  font-size: clamp(17px, 2.6dvh, 25px);
-  font-weight: bold;
-  text-shadow: 0 2px 5px #0006;
+.snow{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+  overflow:hidden;
 }
 
-.donation-text {
-  margin: clamp(5px, .8dvh, 10px) 0;
-  font-size: clamp(10px, 1.5dvh, 14px);
-  line-height: 1.35;
-  color: #f4f1e9;
+.snowflake{
+  position:absolute;
+  top:-20px;
+  color:white;
+  animation:snowfall linear infinite;
 }
 
-.donate-button {
-  display: block;
-  width: 100%;
-  padding: clamp(9px, 1.5dvh, 15px) 6px;
-  border-radius: 13px;
-  border: 1px solid #ff9292;
-  background: linear-gradient(
-    180deg,
-    #e4474b,
-    #a70e21
-  );
-  box-shadow: 0 4px 13px #0005;
-  color: white;
-  font-size: clamp(13px, 1.9dvh, 17px);
-  font-weight: bold;
-  text-decoration: none;
+@keyframes snowfall{
+  from{transform:translateY(-30px)}
+  to{transform:translateY(110vh)}
 }
 
-.donation-note {
-  margin-top: 6px;
-  color: #e1e8df;
-  font-size: clamp(9px, 1.2dvh, 11px);
-}
-
-/* FOOTER */
-
-.footer {
-  flex: 0 0 auto;
-  color: var(--gold);
-  font-size: clamp(9px, 1.3dvh, 12px);
-  letter-spacing: 3px;
-  font-weight: bold;
-  text-shadow: 0 0 10px #ffcc6688;
-}
-
-/* ANIMATED SNOW */
-
-.snow {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.snowflake {
-  position: absolute;
-  top: -25px;
-  color: white;
-  animation: snowfall linear infinite;
-}
-
-@keyframes snowfall {
-  from {
-    transform: translate3d(0,-30px,0);
-  }
-  to {
-    transform: translate3d(20px,110vh,0);
+@media(max-height:650px){
+  .tree{font-size:30px}
+  h1{font-size:29px}
+  .time-box{padding:8px 2px}
+  .magic-card{padding:9px 7px}
+  .action-button{
+    min-height:32px;
+    padding:7px 12px;
   }
 }
 
-/* SMALL SCREENS */
+@media(max-height:520px){
+  .tree{display:none}
+  .subtitle{display:none}
+}
 
-@media (max-height: 700px) {
-  .tree {
-    font-size: 30px;
+@media(max-width:350px){
+  .screen{
+    padding-left:9px;
+    padding-right:9px;
   }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  .donation-icon {
-    display: none;
-  }
-
-  .donation-text {
-    margin: 4px 0;
-  }
-
-  .magic-card {
-    padding: 8px;
+  .countdown{gap:5px}
+  .action-button{
+    padding:8px 10px;
+    font-size:11px;
   }
 }
 
-@media (max-height: 560px) {
-  .tree {
-    display: none;
-  }
-
-  .description {
-    display: none;
-  }
-
-  .donation-text {
-    display: none;
-  }
-
-  .donation-note {
-    display: none;
-  }
-
-  .time-box {
-    padding: 6px 2px;
-  }
-
-  .number {
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 350px) {
-  .screen {
-    padding-left: 9px;
-    padding-right: 9px;
-  }
-
-  .countdown {
-    gap: 5px;
-  }
-
-  .unit {
-    letter-spacing: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .snowflake {
-    display: none;
-  }
-
-  .progress-fill {
-    transition: none;
-  }
+@media(prefers-reduced-motion:reduce){
+  .snowflake{display:none}
 }
 </style>
 </head>
@@ -446,13 +282,12 @@ h1 span {
 <div class="app">
 
   <div class="background"></div>
-  <div class="background-shade"></div>
+  <div class="shade"></div>
   <div class="snow" id="snow"></div>
 
   <main class="screen">
 
-    <header class="header">
-
+    <header>
       <div class="eyebrow">
         THE MOST WONDERFUL TIME OF THE YEAR
       </div>
@@ -464,10 +299,9 @@ h1 span {
         <span>Christmas</span>
       </h1>
 
-      <p class="description">
+      <p class="subtitle">
         The magic begins in...
       </p>
-
     </header>
 
     <section class="countdown">
@@ -513,318 +347,227 @@ h1 span {
         ✨ A little Christmas magic ✨
       </div>
 
-      <div class="magic-message" id="magicMessage">
-        May your days be merry and bright!
+      <div class="magic-text" id="magicMessage">
+        Believe in the magic of Christmas!
       </div>
 
     </section>
 
-    <button
-      id="shareButton"
-      class="share-button"
-      type="button"
-    >
-      ↗ Share Countdown
-    </button>
+    <div class="actions">
 
-    <section class="donation-card">
-
-      <div class="donation-icon">🎅☕</div>
-
-      <div class="donation-title">
-        🎄 Support Christmas Magic
-      </div>
-
-      <div class="donation-text">
-        Enjoying the countdown?<br>
-        Buy Santa a coffee and help keep<br>
-        the Christmas magic alive!
-      </div>
+      <button
+        id="shareButton"
+        class="action-button"
+        type="button"
+      >
+        <span class="action-icon">↗</span>
+        Share
+      </button>
 
       <a
         id="donateButton"
-        class="donate-button"
-        href="https://www.buymeacoffee.com/"
+        class="action-button"
+        href="https://ko-fi.com/"
         target="_blank"
         rel="noopener noreferrer"
       >
-        ❤️ Buy Santa a Coffee ☕
+        <span class="action-icon">☕</span>
+        Buy Santa a coffee
       </a>
 
-      <div class="donation-note">
-        100% optional • No ads • Free forever
-      </div>
-
-    </section>
+    </div>
 
     <div class="footer">
       ✧ DECEMBER 25 ✧
     </div>
 
   </main>
-
 </div>
 
 <script>
 
-// ======================================
 // DONATION LINK
-// ======================================
+// Replace with your own Ko-fi profile URL.
+// Donations are entirely optional.
+// All app features remain 100% free.
 
-// Replace with your personal donation URL.
-// For native store releases, payment
-// integration must follow store rules.
-
-const DONATION_URL =
-  "https://www.buymeacoffee.com/";
+const DONATION_URL = "https://ko-fi.com/";
 
 document.getElementById("donateButton").href =
   DONATION_URL;
 
 
-// ======================================
 // COUNTDOWN
-// ======================================
 
-const daysElement =
-  document.getElementById("days");
+const daysEl = document.getElementById("days");
+const hoursEl = document.getElementById("hours");
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
 
-const hoursElement =
-  document.getElementById("hours");
-
-const minutesElement =
-  document.getElementById("minutes");
-
-const secondsElement =
-  document.getElementById("seconds");
-
-const percentageElement =
-  document.getElementById("percentage");
-
-const progressElement =
-  document.getElementById("progress");
-
-function pad(number) {
-  return String(number).padStart(2, "0");
+function pad(n){
+  return String(n).padStart(2,"0");
 }
 
-function updateCountdown() {
+function updateCountdown(){
 
   const now = new Date();
 
   let christmas = new Date(
-    now.getFullYear(),
-    11,
-    25,
-    0,
-    0,
-    0
+    now.getFullYear(),11,25,0,0,0
   );
 
-  if (now >= christmas) {
-
+  if(now >= christmas){
     christmas = new Date(
-      now.getFullYear() + 1,
-      11,
-      25,
-      0,
-      0,
-      0
+      now.getFullYear()+1,11,25,0,0,0
     );
-
   }
 
-  const difference =
-    christmas.getTime() - now.getTime();
+  const diff = christmas-now;
 
-  const days = Math.floor(
-    difference / 86400000
+  const days = Math.floor(diff/86400000);
+  const hours = Math.floor((diff/3600000)%24);
+  const minutes = Math.floor((diff/60000)%60);
+  const seconds = Math.floor((diff/1000)%60);
+
+  daysEl.textContent = days;
+  hoursEl.textContent = pad(hours);
+  minutesEl.textContent = pad(minutes);
+  secondsEl.textContent = pad(seconds);
+
+  const previous = new Date(
+    christmas.getFullYear()-1,11,25
   );
 
-  const hours = Math.floor(
-    (difference / 3600000) % 24
+  const total = christmas-previous;
+  const elapsed = now-previous;
+
+  const progress = Math.max(
+    0,Math.min(100,elapsed/total*100)
   );
 
-  const minutes = Math.floor(
-    (difference / 60000) % 60
-  );
+  document.getElementById("percentage")
+    .textContent = progress.toFixed(1)+"%";
 
-  const seconds = Math.floor(
-    (difference / 1000) % 60
-  );
-
-  daysElement.textContent = days;
-  hoursElement.textContent = pad(hours);
-  minutesElement.textContent = pad(minutes);
-  secondsElement.textContent = pad(seconds);
-
-  // Annual Christmas progress
-
-  const previousChristmas = new Date(
-    christmas.getFullYear() - 1,
-    11,
-    25
-  );
-
-  const total =
-    christmas.getTime() -
-    previousChristmas.getTime();
-
-  const elapsed =
-    now.getTime() -
-    previousChristmas.getTime();
-
-  const percentage = Math.max(
-    0,
-    Math.min(100, elapsed / total * 100)
-  );
-
-  percentageElement.textContent =
-    percentage.toFixed(1) + "%";
-
-  progressElement.style.width =
-    percentage + "%";
-
+  document.getElementById("progress")
+    .style.width = progress+"%";
 }
 
 updateCountdown();
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown,1000);
 
 
-// ======================================
-// SNOW
-// ======================================
-
-const snowContainer =
-  document.getElementById("snow");
-
-if (!window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-).matches) {
-
-  for (let i = 0; i < 45; i++) {
-
-    const snowflake =
-      document.createElement("span");
-
-    snowflake.className = "snowflake";
-
-    snowflake.textContent =
-      Math.random() > 0.75 ? "❄" : "•";
-
-    snowflake.style.left =
-      Math.random() * 100 + "%";
-
-    snowflake.style.fontSize =
-      (4 + Math.random() * 10) + "px";
-
-    snowflake.style.opacity =
-      0.2 + Math.random() * 0.6;
-
-    snowflake.style.animationDuration =
-      (8 + Math.random() * 13) + "s";
-
-    snowflake.style.animationDelay =
-      (-Math.random() * 21) + "s";
-
-    snowContainer.appendChild(snowflake);
-
-  }
-
-}
-
-
-// ======================================
-// DAILY CHRISTMAS MESSAGE
-// ======================================
+// 12 RANDOM CHRISTMAS SLOGANS
+// A new slogan is selected on every page load.
 
 const messages = [
-  "May your days be merry and bright!",
-  "Christmas magic is in the air!",
   "Believe in the magic of Christmas!",
+  "It's the most wonderful time of the year!",
+  "Christmas is where memories are made.",
+  "Let your heart be light this Christmas.",
+  "The magic of Christmas never fades.",
+  "All roads lead home for Christmas.",
+  "A season of joy, love and wonder.",
+  "Every snowflake carries a little magic.",
   "The best gifts come from the heart.",
-  "Let your heart be light this Christmas!",
-  "Every snowflake brings a little magic.",
-  "Joy, peace and love are on their way!",
-  "The most wonderful season is coming!",
-  "A little kindness makes Christmas brighter!",
-  "Warm wishes and Christmas kisses!"
+  "Christmas brings us closer together.",
+  "Make a wish upon a Christmas star.",
+  "May your Christmas sparkle with joy!"
 ];
 
-const today = new Date();
-
-const dayOfYear = Math.floor(
-  (
-    Date.UTC(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    ) -
-    Date.UTC(today.getFullYear(), 0, 1)
-  ) / 86400000
+const randomIndex = Math.floor(
+  Math.random()*messages.length
 );
 
 document.getElementById("magicMessage")
-  .textContent =
-    messages[dayOfYear % messages.length];
+  .textContent = messages[randomIndex];
 
 
-// ======================================
-// SHARE COUNTDOWN
-// ======================================
+// SNOW
+
+const snow = document.getElementById("snow");
+
+if(!window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches){
+
+  for(let i=0;i<45;i++){
+
+    const flake = document.createElement("span");
+    flake.className = "snowflake";
+
+    flake.textContent =
+      Math.random()>.75 ? "❄" : "•";
+
+    flake.style.left =
+      Math.random()*100+"%";
+
+    flake.style.fontSize =
+      (4+Math.random()*10)+"px";
+
+    flake.style.opacity =
+      .2+Math.random()*.6;
+
+    flake.style.animationDuration =
+      (8+Math.random()*13)+"s";
+
+    flake.style.animationDelay =
+      (-Math.random()*21)+"s";
+
+    snow.appendChild(flake);
+  }
+}
+
+
+// SHARE
 
 const shareButton =
   document.getElementById("shareButton");
 
 shareButton.addEventListener(
   "click",
-  async function() {
-
-    const days = daysElement.textContent;
+  async () => {
 
     const message =
-      "🎄 Only " + days +
+      "🎄 Only "+daysEl.textContent+
       " days until Christmas! 🎅";
 
-    try {
+    try{
 
-      if (navigator.share) {
+      if(navigator.share){
 
         await navigator.share({
-          title: "Countdown Until Xmas",
-          text: message,
-          url: window.location.href
+          title:"Countdown Until Xmas",
+          text:message,
+          url:window.location.href
         });
 
-      } else if (navigator.clipboard) {
+      }else if(navigator.clipboard){
 
         await navigator.clipboard.writeText(
-          message + " " + window.location.href
+          message+" "+window.location.href
         );
 
-        shareButton.textContent = "✓ Copied!";
+        shareButton.textContent = "✓ Copied";
 
-        setTimeout(() => {
-          shareButton.textContent =
-            "↗ Share Countdown";
-        }, 2000);
+        setTimeout(()=>{
+          shareButton.innerHTML =
+            '<span class="action-icon">↗</span> Share';
+        },2000);
 
-      } else {
+      }else{
 
         shareButton.textContent =
           "Sharing unavailable";
 
-        setTimeout(() => {
-          shareButton.textContent =
-            "↗ Share Countdown";
-        }, 2000);
-
+        setTimeout(()=>{
+          shareButton.innerHTML =
+            '<span class="action-icon">↗</span> Share';
+        },2000);
       }
 
-    } catch (error) {
-      // Sharing cancelled.
+    }catch(error){
+      // User cancelled sharing.
     }
-
   }
 );
 
