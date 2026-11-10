@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#062d29">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="A magical, free Christmas countdown with snowfall and festive messages.">
+<meta name="description" content="A free Christmas countdown with magical snowfall and festive messages.">
 <title>Countdown Until Xmas</title>
 
 <style>
@@ -29,18 +29,14 @@ html,body{
   height:100dvh;
   overflow:hidden;
   isolation:isolate;
-  background:
-    radial-gradient(ellipse at center,
-    #175447,#062d29 75%);
+  background:radial-gradient(ellipse at center,#175447,#062d29 75%);
 }
 
 .background{
   position:absolute;
   inset:0;
   z-index:-2;
-  background:
-    url("christmas-background.jpg")
-    center center/cover no-repeat;
+  background:url("christmas-background.jpg") center center/cover no-repeat;
 }
 
 .shade{
@@ -151,8 +147,7 @@ h1 span{
   height:100%;
   width:0%;
   border-radius:20px;
-  background:linear-gradient(
-    90deg,#d6a146,#ffe4a0);
+  background:linear-gradient(90deg,#d6a146,#ffe4a0);
   transition:width .5s;
 }
 
@@ -213,6 +208,16 @@ h1 span{
 .action-icon{
   font-size:15px;
   color:#ffe0a0;
+}
+
+.donation-note{
+  margin-top:9px;
+  color:rgba(255,255,255,.82);
+  font-size:10px;
+  font-weight:400;
+  letter-spacing:.3px;
+  text-align:center;
+  text-shadow:0 2px 6px #0008;
 }
 
 .footer{
@@ -288,6 +293,7 @@ h1 span{
   <main class="screen">
 
     <header>
+
       <div class="eyebrow">
         THE MOST WONDERFUL TIME OF THE YEAR
       </div>
@@ -302,7 +308,10 @@ h1 span{
       <p class="subtitle">
         The magic begins in...
       </p>
+
     </header>
+
+    <!-- COUNTDOWN -->
 
     <section class="countdown">
 
@@ -328,6 +337,8 @@ h1 span{
 
     </section>
 
+    <!-- PROGRESS -->
+
     <section class="progress-section">
 
       <div class="progress-info">
@@ -341,6 +352,8 @@ h1 span{
 
     </section>
 
+    <!-- RANDOM CHRISTMAS SLOGAN -->
+
     <section class="magic-card">
 
       <div class="magic-title">
@@ -353,51 +366,58 @@ h1 span{
 
     </section>
 
-    <div class="actions">
+    <!-- SHARE AND DONATION -->
 
-      <button
-        id="shareButton"
-        class="action-button"
-        type="button"
-      >
-        <span class="action-icon">↗</span>
-        Share
-      </button>
+    <section class="support-section">
 
-      <a
-        id="donateButton"
-        class="action-button"
-        href="https://ko-fi.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span class="action-icon">☕</span>
-        Buy Santa a coffee
-      </a>
+      <div class="actions">
 
-    </div>
+        <button
+          id="shareButton"
+          class="action-button"
+          type="button">
+          <span class="action-icon">↗</span>
+          Share
+        </button>
+
+        <a
+          id="donateButton"
+          class="action-button"
+          href="https://ko-fi.com/buysantacoffee"
+          target="_blank"
+          rel="noopener noreferrer">
+          <span class="action-icon">☕</span>
+          Buy Santa a Coffee
+        </a>
+
+      </div>
+
+      <div class="donation-note">
+        100% optional • No ads • Free forever
+      </div>
+
+    </section>
 
     <div class="footer">
       ✧ DECEMBER 25 ✧
     </div>
 
   </main>
+
 </div>
 
 <script>
 
-// DONATION LINK
-// Replace with your own Ko-fi profile URL.
-// Donations are entirely optional.
-// All app features remain 100% free.
+/* DONATION LINK */
 
-const DONATION_URL = "https://ko-fi.com/";
+const DONATION_URL =
+  "https://ko-fi.com/buysantacoffee";
 
 document.getElementById("donateButton").href =
   DONATION_URL;
 
 
-// COUNTDOWN
+/* COUNTDOWN */
 
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
@@ -456,8 +476,7 @@ updateCountdown();
 setInterval(updateCountdown,1000);
 
 
-// 12 RANDOM CHRISTMAS SLOGANS
-// A new slogan is selected on every page load.
+/* 12 RANDOM CHRISTMAS SLOGANS */
 
 const messages = [
   "Believe in the magic of Christmas!",
@@ -482,7 +501,7 @@ document.getElementById("magicMessage")
   .textContent = messages[randomIndex];
 
 
-// SNOW
+/* SNOW */
 
 const snow = document.getElementById("snow");
 
@@ -518,10 +537,13 @@ if(!window.matchMedia(
 }
 
 
-// SHARE
+/* SHARE */
 
 const shareButton =
   document.getElementById("shareButton");
+
+const shareOriginalHTML =
+  shareButton.innerHTML;
 
 shareButton.addEventListener(
   "click",
@@ -531,6 +553,9 @@ shareButton.addEventListener(
       "🎄 Only "+daysEl.textContent+
       " days until Christmas! 🎅";
 
+    const shareUrl =
+      "https://xmasscountdown.netlify.app/";
+
     try{
 
       if(navigator.share){
@@ -538,20 +563,19 @@ shareButton.addEventListener(
         await navigator.share({
           title:"Countdown Until Xmas",
           text:message,
-          url:window.location.href
+          url:shareUrl
         });
 
       }else if(navigator.clipboard){
 
         await navigator.clipboard.writeText(
-          message+" "+window.location.href
+          message+" "+shareUrl
         );
 
         shareButton.textContent = "✓ Copied";
 
         setTimeout(()=>{
-          shareButton.innerHTML =
-            '<span class="action-icon">↗</span> Share';
+          shareButton.innerHTML = shareOriginalHTML;
         },2000);
 
       }else{
@@ -560,13 +584,13 @@ shareButton.addEventListener(
           "Sharing unavailable";
 
         setTimeout(()=>{
-          shareButton.innerHTML =
-            '<span class="action-icon">↗</span> Share';
+          shareButton.innerHTML = shareOriginalHTML;
         },2000);
+
       }
 
     }catch(error){
-      // User cancelled sharing.
+      // Sharing cancelled.
     }
   }
 );
